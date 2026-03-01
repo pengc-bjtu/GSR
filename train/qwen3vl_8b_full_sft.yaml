@@ -1,0 +1,59 @@
+### model
+model_name_or_path: ../models/Qwen3-VL-8B/
+image_max_pixels: 4096000 #1024*2000*2
+video_max_pixels: 16384
+#cache_dir:
+
+### method
+stage: sft
+do_train: true 
+finetuning_type: full # choices: [lora,full]
+freeze_vision_tower: false #true
+freeze_multi_modal_projector: false #true
+freeze_language_model: false
+deepspeed: ../LLaMA-Factory/examples/deepspeed/ds_z3_config.json
+
+
+### dataset
+dataset: Dual_all
+dataset_dir: ../LLaMA-Factory/data
+template: qwen3_vl
+cutoff_len: 8192
+# max_samples: 1000
+overwrite_cache: False
+preprocessing_num_workers: 84
+dataloader_num_workers: 16
+add_special_tokens: <top>,</top>,<side>,</side>,<think>,</think>,<conclusion>,</conclusion>,<answer>,</answer>,<bbox>,</bbox>,<label>,</label>
+packing: False
+
+### output
+output_dir: ../models/GSX-Qwen3-8B-Full-SFT
+logging_steps: 10
+save_total_limit: 2
+save_steps: 180
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: tensorboard  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 16
+learning_rate: 1e-6  
+num_train_epochs: 2.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1  
+#warmup_steps: 0
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+flash_attn: auto
+#max_grad_norm: 1.0
+enable_thinking: True
+
+### eval
+# eval_dataset: alpaca_en_demo
+# val_size: 0.1
+# per_device_eval_batch_size: 1
+# eval_strategy: steps
+# eval_steps: 500
