@@ -85,3 +85,6 @@ python ./eval/eval.py \
 Please note that the **DualXrayBench dataset**, the **GSXray training corpus**, and our **fine-tuned model weights (GSR-8B)** are currently undergoing final organization and formatting. 
 
 We will release the full datasets and checkpoints in this repository shortly. Please stay tuned for future updates!
+
+## Citation
+If this work is helpful for your research, please consider citing and star:
